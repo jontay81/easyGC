@@ -559,7 +559,7 @@ class Scan(object):
         @author: Vladimir Likic
         """
        
-        return copy.deepcopy(self.__intensity_list)
+        return copy.copy(self.__intensity_list) #JT changed to reg copy from deepcopy
 
     def __get_intensity_list(self):
         return self.__intensity_list
@@ -820,7 +820,7 @@ class IntensityMatrix(object):
 
         ic_ia = numpy.array(ia)
         mass = self.get_mass_at_index(ix)
-        rt = copy.deepcopy(self.__time_list)
+        rt = copy.copy(self.__time_list) #JT: changed to copy form deep copy
 
         return IonChromatogram(ic_ia, rt, mass)
 
