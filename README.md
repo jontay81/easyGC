@@ -83,6 +83,14 @@ optional arguments:
                         from the list of most important ions in a peak, how
                         many should be outputted as a mini mass-spec?
                         (default: 10)
+  -LM LOWMASS, --lowmass LOWMASS
+			use only ions with mz greater than or equal to
+			this value for peak picking
+  -HM HIGHMASS, --highmass HIGHMASS
+			use only ions with mz lesser than or equal to 
+			this value for peak picking 
+
+
 ```
 
 **align**
