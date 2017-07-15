@@ -209,7 +209,7 @@ def call_peaks(im, tic, smooth, args):
         print "smoothed IM..."
         # noise level calc
         tic1 = savitzky_golay(tic)
-        tic2 = tophat(tic1, struct="1.5m")
+        tic2 = tophat(tic1) #JT: Removed struct=1.5m call to see how default works
         noise_level = window_analyzer(tic2)
         print "Noise level in TIC: ", noise_level
 
@@ -223,7 +223,11 @@ def call_peaks(im, tic, smooth, args):
     #   - First: remove any masses from each peak that have intensity less than r percent of the max intensity in that peak
     #   - Second: remove any peak where there are less than n ions with intensity above the cutoff
     pl2 = rel_threshold(pl, percent=args.minintensity)
-    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=noise_level * args.noisemult)
+    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=100000) 
+
+    #JT: Was getting very different noise cutoff values so just made it 10^5
+    # Which was decided on by looking at chromatograms to find baseline noise lvl
+    #noise_level * args.noisemult + 20000) #JT: Added 20000 offset
     print "Peaks remaining after filtering:", len(pl3)
 
     for peak in pl3:

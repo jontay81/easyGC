@@ -66,12 +66,18 @@ def composite_peak(peak_list, minutes=False):
         for peak in peak_list:
             rts.append( peak.get_rt() )
 
+
         is_outlier = median_outliers(rts)
+	
+	#JT: Cannot enumerate over numpy array like a list so
+	#    I had to change the way the loop worked here using nditer
+	#    and another looping variable. May be a better way to do this
 
-        for i, val in enumerate(is_outlier):
-            if val:
+	i = 0
+        for j in numpy.nditer(is_outlier):
+	    if j:
                 peak_list[i].isoutlier = True
-
+            i = i + 1
 
     # DK: the average RT and average mass spec for the compo peak is now calculated from peaks that are NOT outliers.
     # This should improve the ability to order peaks and figure out badly aligned entries
@@ -241,6 +247,7 @@ def percentile_based_outlier(data, threshold=95):
 
 # added by DK. courtesy of
 # http://stackoverflow.com/questions/11686720/is-there-a-numpy-builtin-to-reject-outliers-from-a-list
+
 def median_outliers(data, m = 2.5):
     data = numpy.array(data)
     d = numpy.abs(data - numpy.nanmedian(data))
