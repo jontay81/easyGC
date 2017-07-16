@@ -279,7 +279,7 @@ class Alignment(object):
 
             compo_peak      = composite_peak( list(p[0] for p in new_peak_list), minutes)   # this method will create the compo peak, aqnd also mark outlier peaks with a bool isoutlier
             peak_UID        = compo_peak.get_UID()
-            peak_UID_string = ( '"%s"' % peak_UID)
+            peak_UID_string = ( "%s" % peak_UID) #JT: removed nested "" to make it easier to work with R
 
             currcell = ws1.cell( column = 2+peak_idx, row = 1, value = peak_UID_string )
             currcell = ws1.cell( column = 2+peak_idx, row = 2, value = "%.3f" % float(compo_peak.get_rt()/60) )

@@ -111,9 +111,12 @@ class Peak:
         @author: Andrew Isaac
         """
 
-        minutes = 1.0
-        if self.__minutes == True:
-            minutes = 60.0
+	#JT: Changed RT to seconds and peak naming to be easier to import
+	#    into R for further analysis
+        
+	minutes = 1.0
+        #if self.__minutes == True:
+        #    minutes = 60.0
         if self.__mass_spectrum != None:
             mass_list = self.__mass_spectrum.mass_list
             mass_spec = self.__mass_spectrum.mass_spec
@@ -127,12 +130,12 @@ class Peak:
                     best2_ii = best_ii
                     best_ii = ii
             ratio = int(100*mass_spec[best2_ii]/(best+1))
-            UID = "%d-%d-%d-%.3f" % (int(mass_list[best_ii]),
+            UID = "%d_%d_%d_%.1f" % (int(mass_list[best_ii]),
                     int(mass_list[best2_ii]), ratio, self.__rt/minutes)
         elif self.__ic_mass != None:
-            UID = "%d-%.3f" % (int(self.__ic_mass), self.__rt/minutes)
+            UID = "%d_%.1f" % (int(self.__ic_mass), self.__rt/minutes)
         else:
-            UID =  "%.3f" % self.__rt/minutes
+            UID =  "%.1f" % self.__rt/minutes
 
         self.__UID = UID
 
