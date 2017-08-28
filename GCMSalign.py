@@ -58,6 +58,8 @@ def detect(args):
     global exprdir
     exprdir = os.path.join(outdir,"expr")
     print exprdir
+    
+    global out_prefix
 
     if os.path.isdir(outdir) == False:
         os.mkdir(outdir)
@@ -310,6 +312,8 @@ def load_run(infile):
 def multi_align_local(exprlist, Dw, Gw, min_common=1, tofile=True, transposed=True):
     global exprdir
     global outdir
+    global out_prefix
+
     out_prefix = (datetime.datetime.now()).strftime("%Y-%m-%d-%H%M")
 
     print "locally aligning peaks from ", exprdir
@@ -441,9 +445,9 @@ from pyms.Gapfill.Function import *
 #
 #JT: Uncommented fill gaps function below to test peak fill capabilities
 def fillgaps():
-    m = file2matrix(expr_dir + output_prefix + "area_common_ion.csv")
+    m = file2matrix(exprdir + out_prefix + "_area_common_ion.csv")
     sample_list = mp_finder(m)
     for s in sample_list:
-        missing_peak_finder(s, os.path.join(base_path, "CDF/" + s.get_name() + ".CDF"))
-    write_filled_csv(sample_list, expr_dir + output_prefix + "area_common_ion.csv",
-                     expr_dir + output_prefix + "area_gapfilled.csv")
+        missing_peak_finder(s, os.path.join("./"  + s.get_name()))
+    write_filled_csv(sample_list, exprdir + out_prefix + "_area_common_ion.csv",
+                     exprdir + out_prefix + "_area_gapfilled.csv")

@@ -84,9 +84,9 @@ def mp_finder(inputmatrix):
     for line in inputmatrix[1:]:
         uid = line[uid_pos]
         common_ion = line[ci_pos]
-
-        qual_ion_1 = uid.split("-")[0]
-        qual_ion_2 = uid.split("-")[1]
+	#JT: Changed split char to _ from -
+        qual_ion_1 = uid.split("_")[0]
+        qual_ion_2 = uid.split("_")[1]
         rt = uid.split("-")[-1]
         #print rt
        
