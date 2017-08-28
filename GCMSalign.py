@@ -147,7 +147,7 @@ def align(args):
 
     exprlist = load_expr_list()
     multi_align_local(exprlist, args.distance, args.gap, args.mincommon, tofile=True, transposed=args.transposed)
-
+    fillgaps() #JT:Added fillgaps to global alignment pipeline
 
 
 
@@ -176,7 +176,7 @@ def detect_and_align(args, chunked=False, numchunks=1):
     exprlist = detect_peaks(runlist, args)
 
     multi_align_local(exprlist, args.distance, args.gap, args.mincommon, tofile=True)
-
+    fillgaps() #JT:added fillgaps to pipeline
 
 
 """
