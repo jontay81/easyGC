@@ -439,11 +439,11 @@ def chunks(l, n):
 
 #from pyms.Gapfill.Function import *
 #
-#
-#def fillgaps():
-#    m = file2matrix(expr_dir + output_prefix + "area_common_ion.csv")
-#    sample_list = mp_finder(m)
-#    for s in sample_list:
-#        missing_peak_finder(s, os.path.join(base_path, "CDF/" + s.get_name() + ".CDF"))
-#    write_filled_csv(sample_list, expr_dir + output_prefix + "area_common_ion.csv",
-#                     expr_dir + output_prefix + "area_gapfilled.csv")
+#JT: Uncommented fill gaps function below to test peak fill capabilities
+def fillgaps():
+    m = file2matrix(expr_dir + output_prefix + "area_common_ion.csv")
+    sample_list = mp_finder(m)
+    for s in sample_list:
+        missing_peak_finder(s, os.path.join(base_path, "CDF/" + s.get_name() + ".CDF"))
+    write_filled_csv(sample_list, expr_dir + output_prefix + "area_common_ion.csv",
+                     expr_dir + output_prefix + "area_gapfilled.csv")
