@@ -223,7 +223,9 @@ def call_peaks(im, tic, smooth, args):
     #   - First: remove any masses from each peak that have intensity less than r percent of the max intensity in that peak
     #   - Second: remove any peak where there are less than n ions with intensity above the cutoff
     pl2 = rel_threshold(pl, percent=args.minintensity)
-    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=100000) 
+    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=100000) #100000 for pegBT  #200 for peg3 
+
+
 
     #JT: Was getting very different noise cutoff values so just made it 10^5
     # Which was decided on by looking at chromatograms to find baseline noise lvl
@@ -321,10 +323,10 @@ def multi_align_local(exprlist, Dw, Gw, min_common=1, tofile=True, transposed=Tr
             A1.write_transposed_output(os.path.join(exprdir, out_prefix + "_aligned_rt.xlsx"))
         else:
             A1.write_excel(os.path.join(exprdir, out_prefix + "_aligned_rt.xlsx"))
-
+	#JT: Uncommented writing other formats
         A1.write_csv_dk( os.path.join(exprdir, out_prefix + '_aligned_rt.csv'), os.path.join(exprdir, out_prefix + '_aligned_area.csv') )
-        #A1.write_common_ion_csv( os.path.join(exprdir, out_prefix + '_area_common_ion.csv'), ci_list)
-        #A1.write_ion_areas_csv( os.path.join(exprdir, out_prefix +  '_aligned_ions.csv') )
+        A1.write_common_ion_csv( os.path.join(exprdir, out_prefix + '_area_common_ion.csv'), ci_list)
+        A1.write_ion_areas_csv( os.path.join(exprdir, out_prefix +  '_aligned_ions.csv') )
     return A1
 
 
@@ -336,7 +338,8 @@ def multi_align_global(alignments_list, Db, Gb, min_common=1, tofile=True):
 
     if tofile == True:
         A1.write_csv(expr_dir + output_prefix + 'aligned_rt.csv', expr_dir + output_prefix + 'aligned_area.csv')
-        # A1.write_common_ion_csv(expr_dir+output_prefix+'area_common_ion.csv', common_ion_list)
+        #JT: Uncommented write_common_ion
+	A1.write_common_ion_csv(expr_dir+output_prefix+'area_common_ion.csv', common_ion_list)
         A1.write_ion_areas_csv(expr_dir + output_prefix + 'aligned_ions.csv')
     return A1
 
