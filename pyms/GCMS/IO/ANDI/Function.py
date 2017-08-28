@@ -75,7 +75,9 @@ def ANDI_reader(file_name):
     intensity_previous = intensity_values[0]
     intensity_list.append(intensity_previous)
     if not len(mass_values) == len(intensity_values):
+	
         error("length of mass_list is not equal to length of intensity_list !")
+
     for i in range(len(mass_values) - 1):
         # assume masses in ascending order until new scan
         if mass_previous <= mass_values[i + 1]:
@@ -101,7 +103,15 @@ def ANDI_reader(file_name):
 
     # sanity check
     if not len(time_list) == len(scan_list):
-        error("number of time points does not equal the number of scans")
+	#JT: Debug for old gcms data	
+	#JT: time longer than scans so trim
+	print "Time list is"
+	print len(time_list) - len(scan_list)
+	print "longer than scan list. Trimming...."
+	time_list = time_list[0:len(scan_list)]
+	print len(time_list)
+	print len(scan_list)
+        #error("number of time points does not equal the number of scans")
 
     data = GCMS_data(time_list, scan_list)
 

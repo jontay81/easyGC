@@ -98,9 +98,12 @@ def mp_finder(inputmatrix):
 
     return sample_list
 
+#JT: Changed default values of:
+# null_ions, crop_ions,threshold(1000 to 100000)
+#RT_window to 10 from 1
 
-def missing_peak_finder(sample, andi_file, points=7, null_ions=[73, 147],\
-                            crop_ions=[50,220], threshold=1000, rt_window=1):
+def missing_peak_finder(sample, andi_file, points=7, null_ions=[73, 207],\
+                            crop_ions=[45,300], threshold=100000, rt_window=10):
     """
     @summary: Integrates raw data around missing peak locations
               to fill in NAs in the data matrix
