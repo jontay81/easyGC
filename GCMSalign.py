@@ -437,7 +437,7 @@ def chunks(l, n):
 #    print res
 
 
-#from pyms.Gapfill.Function import *
+from pyms.Gapfill.Function import *
 #
 #JT: Uncommented fill gaps function below to test peak fill capabilities
 def fillgaps():
