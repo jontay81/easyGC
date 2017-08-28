@@ -87,7 +87,7 @@ def mp_finder(inputmatrix):
 	#JT: Changed split char to _ from -
         qual_ion_1 = uid.split("_")[0]
         qual_ion_2 = uid.split("_")[1]
-        rt = uid.split("-")[-1]
+        rt = uid.split("_")[-1]
         #print rt
        
         for i, area in enumerate(line[ci_pos+1:]):
@@ -164,19 +164,22 @@ def missing_peak_finder(sample, andi_file, points=7, null_ions=[73, 207],\
         im.set_ic_at_index(ii, ic_base)
 
     for mp in sample.get_missing_peaks():
-
+       #JT: Debug peak attributes
+        #attrs = vars(mp)
+        #print ', '.join("%s: %s" % item for item in attrs.items())
         mp_rt = mp.get_rt()
+        #print(repr(mp_rt))
         common_ion = mp.get_ci()
         qual_ion_1 = float(mp.get_qual_ion1())
         qual_ion_2 = float(mp.get_qual_ion2())
        
 
         ci_ion_chrom = im.get_ic_at_mass(common_ion)
-        print "ci = ",common_ion
+        #print "ci = ",common_ion
         qi1_ion_chrom = im.get_ic_at_mass(qual_ion_1)
-        print "qi1 = ", qual_ion_1
+        #print "qi1 = ", qual_ion_1
         qi2_ion_chrom = im.get_ic_at_mass(qual_ion_2)
-        print "qi2 = ", qual_ion_2
+        #print "qi2 = ", qual_ion_2
         ######
         # Integrate the CI around that particular RT
         #######
@@ -186,7 +189,7 @@ def missing_peak_finder(sample, andi_file, points=7, null_ions=[73, 207],\
        
         points_1 = ci_ion_chrom.get_index_at_time(float(mp_rt))
         points_2 = ci_ion_chrom.get_index_at_time(float(mp_rt)-rt_window)
-        print "rt_window = ", points_1 - points_2
+        #print "rt_window = ", points_1 - points_2
 
         rt_window_points = points_1 - points_2
 
@@ -206,7 +209,7 @@ def missing_peak_finder(sample, andi_file, points=7, null_ions=[73, 207],\
                 if q1_intensity > threshold/2 and q2_intensity > threshold/2:
                     large_peaks.append([rt, intens])
                
-        print('found %d peaks above threshold'%len(large_peaks))
+        #print('found %d peaks above threshold'%len(large_peaks))
 
         areas = []
         for peak in large_peaks:
@@ -221,10 +224,10 @@ def missing_peak_finder(sample, andi_file, points=7, null_ions=[73, 207],\
         if len(areas)>0:
             biggest_area = areas[-1]
             mp.set_ci_area(biggest_area)
-            print "found area:", biggest_area, "at rt:", mp_rt
+            #print "found area:", biggest_area, "at rt:", mp_rt
         else:
-            print "Missing peak at rt = ", mp_rt
-            mp.set_ci_area('na')
+            #print "Missing peak at rt = ", mp_rt
+            mp.set_ci_area('NA')
 
 def transposed(lists):
    """
@@ -263,7 +266,7 @@ def write_filled_csv(sample_list, area_file, filled_area_file):
     uid_list = invert_old_matrix[0][1:]
     rt_list = []
     for uid in uid_list:
-        rt = uid.split('-')[-1]
+        rt = uid.split('_')[-1]
         rt_list.append(rt)
        
    

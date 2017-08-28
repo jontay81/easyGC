@@ -101,25 +101,25 @@ class MissingPeak(object):
         #return int(string.split(self.__UID, '-')[1])
 
     def set_ci_area(self, ci_area):
-        """
+        '''
         @summary: sets the common ion area calculated by the gap fill
                   algorithm
         @param ci_area: The area of the common ion
         @type ci_area: intType
 
-        """
+        '''
         self.__ci_area = ci_area
 
     def get_ci_area(self):
-        """
+        '''
         @summary: returns the common ion area
 
         @return ci_area: The area of the common ion
         @rtype: intType
-        """
+        '''
         return self.__ci_area
-       
-
+    #JT: This function was defined twice for unknown reasons. Commenting out   
+    '''
     def get_rt(self):
         """
         @summary: returns the retention time of the peak
@@ -128,7 +128,7 @@ class MissingPeak(object):
         @rtype: floatType
         """
         return self.__rt
-   
+    '''
 
 
 
