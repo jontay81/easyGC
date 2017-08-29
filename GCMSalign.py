@@ -184,7 +184,8 @@ def detect_and_align(args, chunked=False, numchunks=1):
 """
 Some useful Savitzky-Golay info: The width of the windows and the order of the polynomial can be changed so it
 fits the noise level and complexity of the raw data, e.g., high noise levels require a wider
-window (default=7), while high complexity in data requires a higher order polynomial (default=2).
+window (default=7), while high complexity in data requires a higher order polynomial (default=2).  
+#JT: It appears width 51 and Order 5 are max values according to openchrom DW classifier
 
 The Durbin-Watson Classifier in OpenChrom can be used to determine the best width and order to use. A DW of 2.0 is optimal
 """
@@ -202,7 +203,7 @@ def call_peaks(im, tic, smooth, args):
             ic = im.get_ic_at_index(ii)
             #print "got ic for mass ", ii
             # ic1 = savitzky_golay(ic)
-            ic_smooth = savitzky_golay(ic, window=args.window, degree=2)
+            ic_smooth = savitzky_golay(ic, window=args.window, degree=5) #JT: changed to 5 from 2
             #print "savitky golay ran "
             ic_base = tophat(ic_smooth, struct="1.5m")
             #print "tophat ran "
@@ -225,7 +226,7 @@ def call_peaks(im, tic, smooth, args):
     #   - First: remove any masses from each peak that have intensity less than r percent of the max intensity in that peak
     #   - Second: remove any peak where there are less than n ions with intensity above the cutoff
     pl2 = rel_threshold(pl, percent=args.minintensity)
-    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=100000) #100000 for pegBT  #200 for peg3 
+    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=10000000) #10000000 for pegBT  #200 for peg3 
 
 
 
