@@ -203,7 +203,7 @@ def call_peaks(im, tic, smooth, args):
             ic = im.get_ic_at_index(ii)
             #print "got ic for mass ", ii
             # ic1 = savitzky_golay(ic)
-            ic_smooth = savitzky_golay(ic, window=args.window, degree=5) #JT: changed to 5 from 2
+            ic_smooth = savitzky_golay(ic, window=args.window, degree=4) #JT: changed to 4 from 2
             #print "savitky golay ran "
             ic_base = tophat(ic_smooth, struct="1.5m")
             #print "tophat ran "
@@ -212,7 +212,7 @@ def call_peaks(im, tic, smooth, args):
         print "smoothed IM..."
         # noise level calc
         tic1 = savitzky_golay(tic)
-        tic2 = tophat(tic1) #JT: Removed struct=1.5m call to see how default works
+        tic2 = tophat(tic1, struct="1.5m") #JT: How does struct size work?
         noise_level = window_analyzer(tic2)
         print "Noise level in TIC: ", noise_level
 
@@ -226,17 +226,16 @@ def call_peaks(im, tic, smooth, args):
     #   - First: remove any masses from each peak that have intensity less than r percent of the max intensity in that peak
     #   - Second: remove any peak where there are less than n ions with intensity above the cutoff
     pl2 = rel_threshold(pl, percent=args.minintensity)
-    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=1000000) #1000000 for pegBT  #200 for peg3 
+    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=100000) #100000 for pegBT  #200 for peg3 #minions maybe 3 instead of 4? 
 
 
 
     #JT: Was getting very different noise cutoff values so just made it 10^5
     # Which was decided on by looking at chromatograms to find baseline noise lvl
-    #noise_level * args.noisemult + 20000) #JT: Added 20000 offset
     print "Peaks remaining after filtering:", len(pl3)
 
     for peak in pl3:
-        # peak.null_mass(73)
+        #peak.null_mass(73)
         #peak.null_mass(207)     # column bleed
         #peak.null_mass(84)      # solvent tailing
 
@@ -302,7 +301,7 @@ def load_run(infile):
     except:
         print "Failure to load input file ", infile
     else:
-        data.trim("4.0m", "20.0m")
+        data.trim("1.25m", "28.0m") #JT:Changed to 1.25/28
         # get TIC. Would prefer to get from smoothed IM but API is faulty!
         tic = data.get_tic()
         # integer mass
