@@ -149,7 +149,7 @@ def align(args):
 
     exprlist = load_expr_list()
     multi_align_local(exprlist, args.distance, args.gap, args.mincommon, tofile=True, transposed=args.transposed)
-    fillgaps() #JT:Added fillgaps to global alignment pipeline
+    #fillgaps() #JT:Added fillgaps to global alignment pipeline
 
 
 
@@ -178,7 +178,7 @@ def detect_and_align(args, chunked=False, numchunks=1):
     exprlist = detect_peaks(runlist, args)
 
     multi_align_local(exprlist, args.distance, args.gap, args.mincommon, tofile=True)
-    fillgaps() #JT:added fillgaps to pipeline
+    #fillgaps() #JT:added fillgaps to pipeline
 
 
 """
@@ -226,7 +226,7 @@ def call_peaks(im, tic, smooth, args):
     #   - First: remove any masses from each peak that have intensity less than r percent of the max intensity in that peak
     #   - Second: remove any peak where there are less than n ions with intensity above the cutoff
     pl2 = rel_threshold(pl, percent=args.minintensity)
-    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=10000000) #10000000 for pegBT  #200 for peg3 
+    pl3 = num_ions_threshold(pl2, n=args.minions, cutoff=1000000) #1000000 for pegBT  #200 for peg3 
 
 
 
